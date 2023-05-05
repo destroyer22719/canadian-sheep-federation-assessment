@@ -6,6 +6,8 @@ import Index from "./Pages/Index.jsx";
 import Actors from "./Pages/Actors.jsx";
 import Actor from "./Pages/Actor.jsx";
 
+import "./styles/global.scss";
+
 const router = createBrowserRouter([
   {
     path: "/",

@@ -24,7 +24,7 @@ const MovieItemComponent = ({ movie, actorId }) => {
         }),
       }
     );
-    
+
     const res = await req.json();
     if (res.message === "Review added") {
       window.location.reload();
@@ -32,15 +32,23 @@ const MovieItemComponent = ({ movie, actorId }) => {
   };
 
   return (
-    <div>
-      <img src={movie.image} alt={movie.title} />
-      <h3>{movie.title}</h3>
-      <p>{movie.role}</p>
-      <div onClick={() => setShowReview(!showReview)}>Reviews</div>
+    <div className="actor__film">
       <div>
+        <img src={movie.image} alt={movie.title} />
+        <h3>{movie.title}</h3>
+        <p>{movie.role}</p>
+      </div>
+      <div
+        onClick={() => setShowReview(!showReview)}
+        className="actor__film-review-button"
+      >
+        Reviews
+      </div>
+      <>
         {showReview && (
           <div>
             <form
+              className="actor__review-form"
               onSubmit={(e) => {
                 e.preventDefault();
                 onSubmit();
@@ -75,17 +83,19 @@ const MovieItemComponent = ({ movie, actorId }) => {
               <h3>Reviews</h3>
               <div>
                 {movie.ratings.map((review) => (
-                  <div key={review._id}>
-                    <div>{review.username}</div>
-                    <p>{review.rating}/10</p>
-                    <p>{review.review}</p>
+                  <div key={review._id} className="actor__film-review">
+                    <div className="actor__film-review-metadata">
+                      <div>{review.username}</div>
+                      <p>{review.rating}/10</p>
+                    </div>
+                    <p className="actor__film-review-text">{review.review}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
         )}
-      </div>
+      </>
     </div>
   );
 };

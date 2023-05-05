@@ -1,12 +1,13 @@
 import React from "react";
 import SearchComponent from "../Components/SearchComponent";
 
+import "../styles/index.scss";
+
 const Index = () => {
   return (
-    <div>
-      <h1>
-        Search For Your Favourite {"("} Or Your Least Favourite {")"}
-      </h1>
+    <div className="index">
+      <h1>Rate your favourite (and/or least favourite) actors' acting!</h1>
+      <div>Powered by the iMDB API!</div>
       <SearchComponent />
     </div>
   );

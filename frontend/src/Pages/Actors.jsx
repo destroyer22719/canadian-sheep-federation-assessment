@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import ActorItemComponent from "../Components/ActorItemComponent";
+
+import "../styles/actors.scss";
 
 const Actors = () => {
   const [actors, setActors] = useState(null);
@@ -23,7 +25,7 @@ const Actors = () => {
   }, []);
 
   return (
-    <div>
+    <div className="actors" >
       <h1>Actors</h1>
       <div>
         {actors === null ? (

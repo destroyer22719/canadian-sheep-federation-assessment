@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MovieItemComponent from "../Components/MovieItemComponent";
 
+import "../styles/actor.scss";
+
 const Actor = () => {
   const { id } = useParams();
 
@@ -20,28 +22,28 @@ const Actor = () => {
   }, []);
 
   return (
-    <div>
+    <div className="actor">
       {actor === null ? (
         <p>Loading...</p>
       ) : (
-        <div>
+        <>
           {!actor ? (
             <p>Actor not found</p>
           ) : (
-            <div>
-              <div>
-                <img src={actor.image} alt={actor.name} />
+            <>
+              <>
+                <img src={actor.image} alt={actor.name} className="actor__actor-img"/>
                 <h1>{actor.name}</h1>
                 <div>{actor.summary}</div>
-              </div>
-              <div>
+              </>
+              <div className="actor__films">
                 {actor.films.map((film) => (
                   <MovieItemComponent movie={film} key={film._id} actorId={actor.imDBId} />
                 ))}
               </div>
-            </div>
+            </>
           )}
-        </div>
+        </>
       )}
     </div>
   );
