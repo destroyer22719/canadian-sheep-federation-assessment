@@ -11,8 +11,8 @@ const app = express();
 
 global.imDBApi = "https://imdb-api.com/en/API";
 
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors());
 app.use(actorRouter);
 
 app.listen(3000, async () => {

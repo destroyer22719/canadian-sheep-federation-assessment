@@ -21,9 +21,13 @@ router.get("/actor", async (req, res) => {
   if (search) {
     console.log(`${imDBApi}/SearchName/${process.env.IMDB_API_KEY}/${search}`);
     const actorReq = await fetch(
-      `${imDBApi}/SearchName/${process.env.IMDB_API_KEY}/${search}`
+      `${imDBApi}/SearchName/${process.env.IMDB_API_KEY}/${search}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-
     const actorRes = await actorReq.json();
 
     const actors = actorRes.results.filter(
@@ -37,6 +41,7 @@ router.get("/actor", async (req, res) => {
 });
 
 router.post("/actor/review/:actorId/:filmId", async (req, res) => {
+  console.log(req.body);
   const { actorId, filmId } = req.params;
   let actor = await getActor(actorId);
   if (!actor) {
@@ -54,19 +59,18 @@ router.post("/actor/review/:actorId/:filmId", async (req, res) => {
   }
   const userReview = { username, rating, review };
 
-  Actor.updateOne(
+  const newActor = await Actor.updateOne(
     {
-      imDBId,
-      films: {
-        imDBId: filmId,
-      },
+      imDBId: actorId,
+      films: { $elemMatch: { imDBId: filmId } },
     },
     {
-      $push: {
-        "films.$.ratings": userReview,
-      },
+      $push: { "films.$.ratings": userReview },
     }
   );
+
+  console.log(newActor);
+  res.status(200).send({ message: "Review added" });
 });
 
 export default router;
